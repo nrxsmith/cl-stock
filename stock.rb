@@ -6,11 +6,12 @@ class StockDisplayer
   def initialize
   end
 
-  def scrape(index)
+  def scrape(ticker, index = nil)
+
     price = ""
     change_pct = ""
 
-    full_url = get_url(index)
+    full_url = build_url(ticker, index)
  
     html = open(full_url)
     page = Nokogiri::HTML(html)
@@ -25,14 +26,14 @@ class StockDisplayer
       change_pct = scanned_pct if scanned_pct != nil
     end
 
-    puts index + ": " + price + " " + change_pct
+    puts ticker + ": " + price + " " + change_pct
   end
 
-  def get_url(index)
+  def build_url(ticker, index = nil)
     base_url = 'http://money.cnn.com/data/markets/'
-    index_url = 'dow/' if index == "Dow"
-    index_url = 'sandp/' if index == "S&P 500"
-    index_url = 'nasdaq/' if index == "Nasdaq"
+    index_url = 'dow/' if ticker == "Dow"
+    index_url = 'sandp/' if ticker == "S&P 500"
+    index_url = 'nasdaq/' if ticker == "Nasdaq"
 
     full_url = base_url + index_url
  end
