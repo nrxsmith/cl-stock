@@ -7,26 +7,33 @@ class StockDisplayer
   end
 
   def scrape(ticker, index = nil)
-
-    price = ""
-    change_pct = ""
-
     full_url = build_url(ticker, index)
  
     html = open(full_url)
     page = Nokogiri::HTML(html)
     
+    price = scan_for_price(page)
+    change_pct = scan_for_pct(page)
+   
+    puts ticker + ": " + price + " " + change_pct
+  end
+
+  def scan_for_price(page)
+    price = ""
     page.css('.wsod_last span').each do |span|
       scanned_value = span.to_s.scan(/\d{0,2}\,?\d{3}\.\d{2}/).first
       price = scanned_value if scanned_value != nil 
     end
+    price
+  end
 
+  def scan_for_pct(page)
+    change_pct = ""
     page.css('.wsod_change').each do |span|
       scanned_pct = span.to_s.scan(/(?:\+?|-)\d{1,2}\.\d{2}%/).first
       change_pct = scanned_pct if scanned_pct != nil
     end
-
-    puts ticker + ": " + price + " " + change_pct
+    change_pct
   end
 
   def build_url(ticker, index = nil)
