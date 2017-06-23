@@ -14,8 +14,11 @@ class StockDisplayer
     
     price = scan_for_price(page)
     change_pct = scan_for_pct(page)
+
+    first_space = " " * (10 - ticker.length)
+    second_space = " " * (10 - price.length)
    
-    puts ticker + ": " + price + " " + change_pct
+    puts ticker + first_space + price + second_space + change_pct
   end
 
   def scan_for_price(page)
