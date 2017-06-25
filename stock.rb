@@ -7,21 +7,39 @@ class StockDisplayer
   def initialize
   end
 
-  def scrape(ticker)
+  def perform(ticker)
     d = DataLocator.new(ticker)
     url = d.perform
      
     html = open(url)
     page = Nokogiri::HTML(html)
-    
-    price = scan_for_price(page)
-    change_pct = scan_for_pct(page)
+    s = Scraper.new(page)
+    s.perform
 
     first_space = " " * (10 - ticker.length)
-    second_space = " " * (10 - price.length)
+    second_space = " " * (10 - s.price.length)
    
-    puts ticker + first_space + price + second_space + change_pct
+    puts ticker + first_space + s.price + second_space + s.change_pct
   end
+ 
+end
+
+
+class Scraper
+
+  attr_reader :price
+  attr_reader :change_pct
+
+  def initialize(page)
+    @page = page
+  end
+
+  def perform
+    @price = scan_for_price(@page)
+    @change_pct = scan_for_pct(@page)
+  end
+
+  private
 
   def scan_for_price(page)
     price = ""
@@ -40,10 +58,6 @@ class StockDisplayer
     end
     change_pct
   end
-end
-
-
-class Scraper
 
 end
 
@@ -80,7 +94,7 @@ end
 
 
 s = StockDisplayer.new
-s.scrape("Dow")
-s.scrape("S&P 500")
-s.scrape("Nasdaq")
-s.scrape("AAPL")
+s.perform("Dow")
+s.perform("S&P 500")
+s.perform("Nasdaq")
+s.perform("AAPL")
