@@ -1,15 +1,17 @@
 require 'open-uri'
 require 'nokogiri'
+require 'byebug'
 
 class StockDisplayer
 
   def initialize
   end
 
-  def scrape(ticker, index = nil)
-    full_url = build_url(ticker, index)
- 
-    html = open(full_url)
+  def scrape(ticker)
+    d = DataLocator.new(ticker)
+    url = d.perform
+     
+    html = open(url)
     page = Nokogiri::HTML(html)
     
     price = scan_for_price(page)
@@ -38,31 +40,47 @@ class StockDisplayer
     end
     change_pct
   end
-
-  def build_url(ticker, index = nil)
-    if index == true
-      base_url = 'http://money.cnn.com/data/markets/'
-    else
-      base_url = 'http://money.cnn.com/quote/quote.html?symb='
-    end
-
-    ticker_url = 'dow/' if ticker == "Dow"
-    ticker_url = 'sandp/' if ticker == "S&P 500"
-    ticker_url = 'nasdaq/' if ticker == "Nasdaq"
-    ticker_url = ticker if index == nil
-
-    full_url = base_url + ticker_url
- end
-
-  def get_index(index)
-  end
-
-  def get_stock(index)
-  end 
 end
 
+
+class Scraper
+
+end
+
+class DataLocator
+
+  INDICES = ["Dow",
+             "S&P 500",
+             "Nasdaq"]
+
+  def initialize(ticker)
+    @ticker = ticker 
+  end
+
+  def perform 
+    if is_index?
+      base_url = 'http://money.cnn.com/data/markets/'
+      ticker_url = 'dow/' if @ticker == "Dow"
+      ticker_url = 'sandp/' if @ticker == "S&P 500"
+      ticker_url = 'nasdaq/' if @ticker == "Nasdaq"
+    else
+      base_url = 'http://money.cnn.com/quote/quote.html?symb='
+      ticker_url = @ticker 
+    end
+
+    full_url = base_url + ticker_url
+  end
+
+  private
+
+  def is_index?
+    INDICES.include?(@ticker)
+  end
+end
+
+
 s = StockDisplayer.new
-s.scrape("Dow", true)
-s.scrape("S&P 500", true)
-s.scrape("Nasdaq", true)
+s.scrape("Dow")
+s.scrape("S&P 500")
+s.scrape("Nasdaq")
 s.scrape("AAPL")
