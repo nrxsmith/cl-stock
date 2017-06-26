@@ -20,9 +20,7 @@ class StockDisplayer
     first_space = " " * (10 - ticker.length)
     second_space = " " * (10 - s.price.length)
    
-    line = ticker + first_space + s.price + second_space + s.change_pct
-    puts line
-    line
+    puts ticker + first_space + s.price + second_space + s.change_pct
   end
  
 end

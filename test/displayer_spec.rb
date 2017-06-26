@@ -8,6 +8,6 @@ class TestStockDisplayer < Minitest::Test
   end
 
   def test_includes_dow
-    assert_match (/.*Dow.*/), @displayer.perform("Dow")
+    assert_output (/.*Dow.*/) { @displayer.perform("Dow") }
   end
 end
