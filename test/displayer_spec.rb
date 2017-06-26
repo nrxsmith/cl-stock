@@ -1,6 +1,6 @@
 require 'minitest/autorun'
 require '../lib/displayer'
-
+require 'byebug'
 class TestStockDisplayer < Minitest::Test
 
   def setup
