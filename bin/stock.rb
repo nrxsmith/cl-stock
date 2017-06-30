@@ -4,4 +4,5 @@ s = StockDisplayer.new
 s.perform("Dow")
 s.perform("S&P 500")
 s.perform("Nasdaq")
-s.perform("AAPL")
+s.perform("BND")
+s.perform("VXUS")
