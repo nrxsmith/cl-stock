@@ -4,4 +4,5 @@ source "https://rubygems.org"
 gem "nokogiri"
 gem "byebug"
 gem "minitest"
+gem "colored"
 
