@@ -17,7 +17,7 @@ class Scraper
   def scan_for_price(page)
     price = ""
     page.css('.wsod_last span').each do |span|
-      scanned_value = span.to_s.scan(/\d{0,2}\,?\d{3}\.\d{2}/).first
+      scanned_value = span.to_s.scan(/\d{0,2}\,?\d{0,3}\.\d{2}/).first
       price = scanned_value if scanned_value != nil 
     end
     price
