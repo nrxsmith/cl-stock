@@ -1,0 +1,6 @@
+Dow
+Nasdaq
+S&P 500
+BND
+VXUS
+GOOG
