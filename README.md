@@ -1,7 +1,7 @@
 # cl-stock
-A command line stock quote retriever; something I built when teaching myself Ruby.
+A command line stock quote retriever.
 
-A few years ago when I was teaching myself Ruby, I was obsessesed with seeing how much of my internet life I could engage in from the command line. I was also following the stock markets a little more closely then than I do now, so this was an effort to get something local I could run whenever instead fo clicking over to my browser.
+A few years ago when I was teaching myself Ruby, I was interested in seeing how much of my internet life I could engage in from the command line. I was also following the stock markets a little more closely then than I do now, so this was an effort to get something local I could run whenever instead fo clicking over to my browser.
 
 It's essentially just a web scraper. It still worked when I last checked (10/6/2018), which honestly surprised me after all this time, but hooray.
 
